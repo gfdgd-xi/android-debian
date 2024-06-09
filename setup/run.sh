@@ -22,5 +22,5 @@ export PROOT_LOADER=$(pwd)/loader
   --cwd=/ \
   --change-id=0:0 \
   --rootfs=debian12_aarch64 \
-  /bin/dash "$@"
+  /bin/bash "$@"
 
