@@ -4,8 +4,16 @@ export LD_LIBRARY_PATH=$(pwd)
 export PROOT_TMP_DIR=$(pwd)/tmp
 export PROOT_LOADER=$(pwd)/loader
 
+export BOTTLEPATH=debian12_aarch64
+# 拷贝 loader
+if [[ ! -f $$BOTTLEPATH ]]; then
+  cp -v loader.sh $BOTTLEPATH/loader.sh
+fi
+
+cp loader.sh
+
 ./proot \
-  --bind=debian12_aarch64/tmp:/dev/shm \
+  --bind=$BOTTLEPATH/tmp:/dev/shm \
   --bind=/sys \
   --bind=/proc/self/fd/2:/dev/stderr \
   --bind=/proc/self/fd/1:/dev/stdout \
@@ -21,6 +29,6 @@ export PROOT_LOADER=$(pwd)/loader
   --kill-on-exit \
   --cwd=/ \
   --change-id=0:0 \
-  --rootfs=debian12_aarch64 \
-  /bin/bash "$@"
+  --rootfs=$BOTTLEPATH \
+  /bin/bash /loader.sh "$@"
 
