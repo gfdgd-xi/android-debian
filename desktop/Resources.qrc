@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Icon/Desktop/deepin-wine-runner.svg</file>
         <file>Icon/Desktop/spark-store-console.svg</file>
+        <file>Icon/Desktop/deepin-terminal.svg</file>
     </qresource>
 </RCC>
