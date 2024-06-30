@@ -1,0 +1,32 @@
+Package: proot
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: ncurses-utils
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: libtalloc
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: vim-runtime
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: resolv-conf
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: c-ares
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: libxml2
+Architecture: aarch64
+Auto-Installed: 1
+
+Package: libuuid
+Architecture: aarch64
+Auto-Installed: 1
+

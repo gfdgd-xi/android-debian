@@ -1,0 +1,26 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+PD_PLUGINS_DIR="/data/data/com.termux/files/usr/etc/proot-distro"
+PD_ROOTFS_DIR="/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs"
+
+if [ -e "${PD_PLUGINS_DIR}/manjaro-aarch64.sh" ] && ! [ -e "${PD_PLUGINS_DIR}/manjaro.sh" ]; then
+mv "${PD_PLUGINS_DIR}/manjaro-aarch64.sh" "${PD_PLUGINS_DIR}/manjaro.sh"
+fi
+
+if [ -e "${PD_ROOTFS_DIR}/manjaro-aarch64" ] && ! [ -e "${PD_ROOTFS_DIR}/manjaro" ]; then
+echo "PRoot-Distro upgrade note: renaming the distribution manjaro-aarch64 to manjaro..."
+
+mv "${PD_ROOTFS_DIR}/manjaro-aarch64" "${PD_ROOTFS_DIR}/manjaro"
+
+echo "PRoot-Distro upgrade note: fixing link2symlink extension files for manjaro, this will take few minutes..."
+
+# rewrite l2s proot symlinks
+find "${PD_ROOTFS_DIR}/manjaro" -type l | while read -r symlink_file_name; do
+symlink_current_target=$(readlink "${symlink_file_name}")
+if [ "${symlink_current_target:0:${#PD_ROOTFS_DIR}}" != "${PD_ROOTFS_DIR}" ]; then
+continue
+fi
+symlink_new_target=$(sed -E "s@(${PD_ROOTFS_DIR})/([^/]+)/(.*)@\1/manjaro/\3@g" <<< "${symlink_current_target}")
+ln -sf "${symlink_new_target}" "${symlink_file_name}"
+done
+fi

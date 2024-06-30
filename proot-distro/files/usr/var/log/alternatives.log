@@ -1,0 +1,4 @@
+update-alternatives 2024-06-30 12:55:08: run with --install /data/data/com.termux/files/usr/bin/editor editor /data/data/com.termux/files/usr/bin/vim 50
+update-alternatives 2024-06-30 12:55:08: link group editor updated to point to /data/data/com.termux/files/usr/bin/vim
+update-alternatives 2024-06-30 12:55:08: run with --install /data/data/com.termux/files/usr/bin/vi vi /data/data/com.termux/files/usr/bin/vim 20
+update-alternatives 2024-06-30 12:55:08: link group vi updated to point to /data/data/com.termux/files/usr/bin/vim

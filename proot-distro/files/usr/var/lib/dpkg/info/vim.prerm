@@ -1,0 +1,7 @@
+#!/data/data/com.termux/files/usr/bin/sh
+if [ "debian" = "pacman" ] || [ "$1" != "upgrade" ]; then
+if [ -x "/data/data/com.termux/files/usr/bin/update-alternatives" ]; then
+update-alternatives --remove editor /data/data/com.termux/files/usr/bin/vim
+update-alternatives --remove vi /data/data/com.termux/files/usr/bin/vim
+fi
+fi
