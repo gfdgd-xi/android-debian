@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icon/Desktop/deepin-wine-runner.svg</file>
+        <file>Icon/Desktop/spark-store-console.svg</file>
+    </qresource>
+</RCC>

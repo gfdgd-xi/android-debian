@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    // 先加载时间，这样就不会闪过 00:00
+    TimerUpdater();
     QTimer *timeUpdaterTimer = new QTimer();
     timeUpdaterTimer->setInterval(1000);
     connect(timeUpdaterTimer, &QTimer::timeout, this, &MainWindow::TimerUpdater);
