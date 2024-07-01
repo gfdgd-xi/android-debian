@@ -1,4 +1,4 @@
-#!/data/local/tmp/termux/files/usr//bin/bash
+#!/data/data/jackpal.androidterm/files/bin/bash
 # shellcheck disable=SC2239
 ##
 ## Script for managing PRoot containers with Linux distributions.
@@ -20,7 +20,7 @@
 ## along with this program. If not, see <http://www.gnu.org/licenses/>.
 ##
 
-PROGRAM_VERSION="4.14.1"
+PROGRAM_VERSION="4.15.0"
 
 #############################################################################
 ##
@@ -120,9 +120,9 @@ PROGRAM_VERSION="4.14.1"
 ## 5.14 PRoot-Distro uses string place holders to define certain common
 ##      values for some variables:
 ##
-##      * @TERMUX_APP_PACKAGE@ - sets Termux app package (com.termux).
-##      * /data/local/tmp/termux/files/usr/ - sets the installation prefix path.
-##      * /data/local/tmp/termux/files/home/ - sets the Termux home directory path.
+##      * /data/data/jackpal.androidterm - sets Termux app package (com.termux).
+##      * /data/data/jackpal.androidterm/files - sets the installation prefix path.
+##      * /data/data/jackpal.androidterm/files/home - sets the Termux home directory path.
 ##
 ##      It is not allowed to hardcode the mentioned values instead of using
 ##      the place holder.
@@ -299,16 +299,16 @@ PROGRAM_VERSION="4.14.1"
 set -e -u
 
 # Override user-defined PATH.
-export PATH="/data/local/tmp/termux/files/usr//bin"
+export PATH="/data/data/jackpal.androidterm/files/bin"
 
 # Reference this where need to retrieve program name.
 PROGRAM_NAME=$(basename "$(realpath "$0")")
 
 # Where distribution plug-ins are stored.
-DISTRO_PLUGINS_DIR="/data/local/tmp/termux/files/usr//etc/proot-distro"
+DISTRO_PLUGINS_DIR="/data/data/jackpal.androidterm/files/etc/proot-distro"
 
 # Base directory where script keeps runtime data.
-RUNTIME_DIR="/data/local/tmp/termux/files/usr//var/lib/proot-distro"
+RUNTIME_DIR="/data/data/jackpal.androidterm/files/var/lib/proot-distro"
 
 # Where rootfs tarballs are downloaded.
 DOWNLOAD_CACHE_DIR="${RUNTIME_DIR}/dlcache"
@@ -321,7 +321,7 @@ DEFAULT_PRIMARY_NAMESERVER="8.8.8.8"
 DEFAULT_SECONDARY_NAMESERVER="8.8.4.4"
 
 # PATH environment variable for distributions.
-DEFAULT_PATH_ENV="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games:/data/local/tmp/termux/files/usr//bin:/system/bin:/system/xbin"
+DEFAULT_PATH_ENV="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games:/data/data/jackpal.androidterm/files/bin:/system/bin:/system/xbin"
 
 # Default fake kernel version.
 # Note: faking kernel version is required when using PRoot-Distro on
@@ -855,22 +855,22 @@ run_proot_cmd() {
 		# If CPU and host OS are 64bit, we can run 32bit guest OS without emulation.
 		# Everything else requires emulator (QEMU).
 		case "$DISTRO_ARCH" in
-			aarch64) cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-aarch64";;
+			aarch64) cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-aarch64";;
 			arm)
 				if [ "$DEVICE_CPU_ARCH" != "aarch64" ] || ! $SUPPORT_32BIT; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-arm"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-arm"
 				fi
 				;;
 			i686)
 				if [ "$DEVICE_CPU_ARCH" != "x86_64" ]; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-i386"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-i386"
 				fi
 				;;
 			x86_64)
 				if [ "$PROOT_DISTRO_X64_EMULATOR" = "QEMU" ]; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-x86_64"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-x86_64"
 				elif [ "$PROOT_DISTRO_X64_EMULATOR" = "BLINK" ]; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/blink"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/blink"
 				else
 					msg
 					msg "${BRED}Error: PROOT_DISTRO_X64_EMULATOR has unknown value '$PROOT_DISTRO_X64_EMULATOR'. Valid values are: BLINK, QEMU."
@@ -927,7 +927,7 @@ run_proot_cmd() {
 		if [ -e "/linkerconfig/ld.config.txt" ]; then
 			cpu_emulator_arg="${cpu_emulator_arg} --bind=/linkerconfig/ld.config.txt"
 		fi
-		cpu_emulator_arg="${cpu_emulator_arg} --bind=/data/local/tmp/termux/files/usr/"
+		cpu_emulator_arg="${cpu_emulator_arg} --bind=/data/data/jackpal.androidterm/files"
 		cpu_emulator_arg="${cpu_emulator_arg} --bind=/system"
 		cpu_emulator_arg="${cpu_emulator_arg} --bind=/vendor"
 		if [ -f "/plat_property_contexts" ]; then
@@ -1952,26 +1952,26 @@ command_login() {
 		# If CPU and host OS are 64bit, we can run 32bit guest OS without emulation.
 		# Everything else requires emulator (QEMU).
 		case "$target_arch" in
-			aarch64) cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-aarch64";;
+			aarch64) cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-aarch64";;
 			arm)
 				if [ "$DEVICE_CPU_ARCH" != "aarch64" ] || ! $SUPPORT_32BIT; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-arm"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-arm"
 				else
 					need_cpu_emulator=false
 				fi
 				;;
 			i686)
 				if [ "$DEVICE_CPU_ARCH" != "x86_64" ]; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-i386"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-i386"
 				else
 					need_cpu_emulator=false
 				fi
 				;;
 			x86_64)
 				if [ "$PROOT_DISTRO_X64_EMULATOR" = "QEMU" ]; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/qemu-x86_64"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/qemu-x86_64"
 				elif [ "$PROOT_DISTRO_X64_EMULATOR" = "BLINK" ]; then
-					cpu_emulator_path="/data/local/tmp/termux/files/usr//bin/blink"
+					cpu_emulator_path="/data/data/jackpal.androidterm/files/bin/blink"
 				else
 					msg
 					msg "${BRED}Error: PROOT_DISTRO_X64_EMULATOR has unknown value '${YELLOW}${PROOT_DISTRO_X64_EMULATOR}${BRED}'. Valid values are: BLINK, QEMU."
@@ -2111,11 +2111,11 @@ command_login() {
 		done
 		unset data_dir
 
-		set -- "--bind=/data/local/tmp/termux//cache" "$@"
-		if [ -d "/data/local/tmp/termux//files/apps" ]; then
-			set -- "--bind=/data/local/tmp/termux//files/apps" "$@"
+		set -- "--bind=/data/data//data/data/jackpal.androidterm/cache" "$@"
+		if [ -d "/data/data//data/data/jackpal.androidterm/files/apps" ]; then
+			set -- "--bind=/data/data//data/data/jackpal.androidterm/files/apps" "$@"
 		fi
-		set -- "--bind=/data/local/tmp/termux/files/home/" "$@"
+		set -- "--bind=/data/data/jackpal.androidterm/files/home" "$@"
 
 		# Bind whole /storage directory when it is readable. This gives
 		# access to shared storage and on some Android versions to external
@@ -2177,14 +2177,14 @@ command_login() {
 				continue
 			fi
 		done
-		set -- "--bind=/data/local/tmp/termux/files/usr/" "$@"
+		set -- "--bind=/data/data/jackpal.androidterm/files" "$@"
 	fi
 
 	# Use Termux home directory if requested.
 	# Ignores --isolated.
 	if $use_termux_home; then
 		if [ "$login_user" = "root" ]; then
-			set -- "--bind=/data/local/tmp/termux/files/home/:/root" "$@"
+			set -- "--bind=/data/data/jackpal.androidterm/files/home:/root" "$@"
 		else
 			if [ -f "${INSTALLED_ROOTFS_DIR}/${distro_name}/etc/passwd" ]; then
 				local user_home
@@ -2194,9 +2194,9 @@ command_login() {
 					user_home="/home/${login_user}"
 				fi
 
-				set -- "--bind=/data/local/tmp/termux/files/home/:${user_home}" "$@"
+				set -- "--bind=/data/data/jackpal.androidterm/files/home:${user_home}" "$@"
 			else
-				set -- "--bind=/data/local/tmp/termux/files/home/:/home/${login_user}" "$@"
+				set -- "--bind=/data/data/jackpal.androidterm/files/home:/home/${login_user}" "$@"
 			fi
 		fi
 	fi
@@ -2204,7 +2204,7 @@ command_login() {
 	# Bind the tmp folder from the host system to the guest system
 	# Ignores --isolated.
 	if $make_host_tmp_shared; then
-		set -- "--bind=/data/local/tmp/termux/files/usr//tmp:/tmp" "$@"
+		set -- "--bind=/data/data/jackpal.androidterm/files/tmp:/tmp" "$@"
 	fi
 
 	# Bind custom file systems.
@@ -2279,7 +2279,7 @@ command_login_help() {
 	msg
 	msg "  ${CYAN}* ${YELLOW}/apex ${CYAN}(only Android 10+)${RST}"
 	msg "  ${CYAN}* ${YELLOW}/data/dalvik-cache${RST}"
-	msg "  ${CYAN}* ${YELLOW}/data/local/tmp/termux/${RST}"
+	msg "  ${CYAN}* ${YELLOW}/data/data//data/data/jackpal.androidterm${RST}"
 	msg "  ${CYAN}* ${YELLOW}/sdcard${RST}"
 	msg "  ${CYAN}* ${YELLOW}/storage${RST}"
 	msg "  ${CYAN}* ${YELLOW}/system${RST}"
@@ -2864,8 +2864,8 @@ DISTRO_ARCH=${DISTRO_ARCH:-}
 if [ -z "$DISTRO_ARCH" ]; then DISTRO_ARCH="${DEVICE_CPU_ARCH}"; fi
 
 # Verify architecture if possible - avoid running under linux32 or similar.
-if [ -x "/data/local/tmp/termux/files/usr//bin/dpkg" ]; then
-	if [ "$DEVICE_CPU_ARCH" != "$("/data/local/tmp/termux/files/usr/"/bin/dpkg --print-architecture)" ]; then
+if [ -x "/data/data/jackpal.androidterm/files/bin/dpkg" ]; then
+	if [ "$DEVICE_CPU_ARCH" != "$("/data/data/jackpal.androidterm/files"/bin/dpkg --print-architecture)" ]; then
 		msg
 		msg "${BRED}Error: the CPU architecture reported by system does not match the architecture of Termux packages. Do not attempt to hijack system properties by using 'linux32' or similar utilities.${RST}"
 		msg
