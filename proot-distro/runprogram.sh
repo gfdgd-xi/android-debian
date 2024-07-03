@@ -1,8 +1,5 @@
 #!/system/bin/sh
-export PATH=$(pwd)/files/usr/bin:$PATH
-export LD_LIBRARY_PATH=$(pwd)/files/usr/lib
-export PROOT_TMP_DIR=$(pwd)/cache
-export PROOT_LOADER=$(pwd)/files/usr/libexec/proot/loader
-export PROOT_LOADER_32=$(pwd)/files/usr/libexec/proot/loader32  # 用于运行 armhf 应用
-export LD_PRELOAD=$(pwd)/files/usr/lib/libtermux-exec.so
+CURRENT_DIR=$(cd $(dirname $0); pwd)
+export PATH=$CURRENT_DIR/files/usr/bin:$PATH
+export LD_LIBRARY_PATH=$CURRENT_DIR/files/usr/lib
 $*
