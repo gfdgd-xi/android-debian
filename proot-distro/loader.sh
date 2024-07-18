@@ -15,9 +15,12 @@ if [ $# -eq 0 ]; then
 else
 	vncserver $DISPLAY -geometry ${1}x${2} #-localhost
 fi
+# 开启 pkexec 授权服务
+/usr/lib/polkit-1/polkitd &
 # 打开窗口管理器
 startxfce4 &
-xfce4-terminal &
+# 开启 Wine 运行器
+deepin-wine-runner &
 # 开启 NoVNC 服务（只允许本机访问）
 /novnc/utils/novnc_proxy --vnc localhost:5901 & #--listen localhost:6080 &
 echo 等待用户自行退出
